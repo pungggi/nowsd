@@ -1,5 +1,10 @@
-let shell = require('shelljs')
+const shell = require('shelljs')
+const os = require('os')
+console.log(`You are workin on ${process.platform}
+your homedir is: ${os.homedir}
+whereas your tempdir: ${os.tmpdir}`)
+
 exports.printMsg = () => {
-    console.log(`You are workin on ${process.platform}`);
     shell.exec("npm -v")
 }
+
