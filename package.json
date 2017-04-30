@@ -1,6 +1,6 @@
 {
   "name": "nowsd",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Deploy to now witch secrets, on production and locally",
   "dependencies": {
     "shelljs": "0.7.*"
