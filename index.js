@@ -29,9 +29,10 @@ exports.dev = (
     dotenv.on("close", () => {
         script += command
         console.log(script)
-        shell.exec(script)
+        // shell.exec(script)
+        readline.clearLine(dotenv, 0)
+        return script
     })
-    // readline.clearLine(dotenv, 0)
 
 }
 
