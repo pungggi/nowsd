@@ -1,13 +1,9 @@
 {
-  "name": "@pungggi/nowsd",
-  "version": "1.0.0",
+  "name": "nowsd",
+  "version": "1.0.3",
   "description": "Deploy to now witch secrets, on production and locally",
   "dependencies": {
-    "shelljs": "0.7.*",
-    "yargs": "7.1.*"
-  },
-  "bin": {
-    "nowsd": "bin/tranform.js"
+    "shelljs": "0.7.*"
   },
   "repository": {
     "type": "git",
