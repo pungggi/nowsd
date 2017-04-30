@@ -13,7 +13,7 @@ exports.printMsg = () => {
 }
 
 exports.dev = (
-    input = path.resolve(__dirname, ".env"),
+    input = path.resolve(process.cwd, ".env"),
     command = 'next') => {
 
     let script = ""
