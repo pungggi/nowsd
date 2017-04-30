@@ -10,5 +10,8 @@
     "url": "https://github.com/pungggi/nowsd.git"
   },
   "author": "A. Pungitore",
-  "license": "ISC"
+  "license": "ISC",
+  "scripts": {
+    "prepublish": "npm version patch"
+  }
 }
