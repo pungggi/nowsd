@@ -3,6 +3,7 @@
   "version": "1.0.8",
   "description": "Deploy to now witch secrets, on production and locally",
   "dependencies": {
+    "fs-extra": "^3.0.0",
     "shelljs": "0.7.*"
   },
   "repository": {
@@ -12,6 +13,7 @@
   "author": "A. Pungitore",
   "license": "ISC",
   "scripts": {
-    "prepublish": "npm version patch"
+    "prepublish": "npm version patch",
+    "test": "node test"
   }
 }
