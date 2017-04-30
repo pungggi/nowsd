@@ -1,4 +1,6 @@
-const nowsd = require('./index')
+let dev = require('./index').dev
 // nowsd.createdeploy()
 
-nowsd.dev()
+dev().then(result => {
+    console.log(result)
+})
