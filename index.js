@@ -12,7 +12,7 @@ exports.printMsg = () => {
     shell.exec("npm -v")
 }
 
-exports.dev = (
+exports.dev = async (
     input = path.resolve(process.cwd(), ".env"),
     command = 'next') => {
 
@@ -28,12 +28,11 @@ exports.dev = (
     })
     dotenv.on("close", () => {
         script += command
-        console.log(script)
+        // console.log(script)
         // shell.exec(script)
         readline.clearLine(dotenv, 0)
-        return script
+        Promise.resolve(script)
     })
-
 }
 
 exports.createdeploy = async () => {
