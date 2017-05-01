@@ -14,7 +14,7 @@ exports.printMsg = () => {
 
 exports.dev =
     (
-        command = 'next',
+        command = 'node node_modules\next\dist\bin\next',
         input = path.resolve(process.cwd(), ".env")
     ) => {
         return new Promise((resolve, reject) => {
