@@ -30,7 +30,7 @@ exports.dev =
                 }
             })
             dotenv.on("close", () => {
-                script += `& ${command}`
+                script += `${command}`
                 // console.log(script)
                 shell.exec(script)
                 readline.clearLine(dotenv, 0)
