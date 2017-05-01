@@ -26,7 +26,7 @@ exports.dev =
 
             dotenv.on("line", line => {
                 if (line.includes("=")) {
-                    script += `set ${line} \n`
+                    script += `set ${line} & `
                 }
             })
             dotenv.on("close", () => {
