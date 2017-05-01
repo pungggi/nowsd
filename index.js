@@ -14,7 +14,7 @@ exports.printMsg = () => {
 
 exports.dev =
     (
-        command = 'node node_modules\next\dist\bin\next',
+        command = 'next',
         input = path.resolve(process.cwd(), ".env")
     ) => {
         return new Promise((resolve, reject) => {
@@ -30,7 +30,7 @@ exports.dev =
                 }
             })
             dotenv.on("close", () => {
-                script += command
+                script += `& ${command}`
                 // console.log(script)
                 shell.exec(script)
                 readline.clearLine(dotenv, 0)
