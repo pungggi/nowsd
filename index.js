@@ -16,7 +16,7 @@ exports.dev =
 
             src.on("line", line => {
                 if (line.includes("=")) {
-                    if (os.platform == 'win32') {
+                    if (os.platform() == 'win32') {
                         script += `set `
                     }
                     script += `${line} & `
