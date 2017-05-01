@@ -1,6 +1,6 @@
 {
   "name": "nowsd",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "Deploy to now witch secrets, on production and locally",
   "dependencies": {
     "fs-extra": "^3.0.0",
