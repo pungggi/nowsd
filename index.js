@@ -43,11 +43,10 @@ exports.deploy =
 
             src.on("line", line => {
                 if (line.includes("=")) {
-                    script += `-e ${line}`
+                    script += `-e ${line} `
                 }
             })
             src.on("close", () => {
-                script += 
                 readline.clearLine(src, 0)
                 resolve(script)
             })
