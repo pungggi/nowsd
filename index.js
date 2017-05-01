@@ -57,6 +57,7 @@ exports.deploy =
             ) => {
                 if (!token) {
                     reject('Token missing. See https://zeit.co/account/tokens.')
+                    return
                 }
                 nowToken = token
                 nowClient(nowToken).getSecrets()
