@@ -48,7 +48,7 @@ exports.deploy =
     (
         token,
         command = 'now',
-        input = path.resolve(process.cwd(), ".env")
+        input = path.resolve(process.cwd(), ".secrets")
     ) => {
         return new Promise(
             (
