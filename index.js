@@ -11,7 +11,7 @@ _addSecret = async (name, value) => {
     let data = await nowClient(nowToken).createSecret(name, value)
 }
 _resetSecret = async (name, value) => {
-    console.log(` delete ${name} to ${value}`)
+    console.log(` delete ${name}`)
     let data = await nowClient(nowToken).deleteSecret(name, value)
     console.log(` add ${name} as ${value}`)
     data = await nowClient(nowToken).createSecret(name, value)
