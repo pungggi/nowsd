@@ -11,7 +11,6 @@ _addSecret = async (name, value) => {
     let data = await nowClient(nowToken).createSecret(name, value)
 }
 _resetSecret = async (name, value) => {
-    console.log(` delete ${name}`)
     let data = await nowClient(nowToken).deleteSecret(name, value)
     console.log(` add ${name} as ${value}`)
     data = await nowClient(nowToken).createSecret(name, value)
@@ -20,7 +19,7 @@ _resetSecret = async (name, value) => {
 exports.dev =
     (
         command = 'next',
-        input = path.resolve(process.cwd(), ".env")
+        input = path.resolve(process.cwd(), ".secrets")
     ) => {
         return new Promise((resolve, reject) => {
             let script = ""
@@ -44,7 +43,9 @@ exports.dev =
         })
     }
 
-exports.deploy =
+
+
+exports.prod =
     (
         token,
         command = 'now',
