@@ -7,13 +7,13 @@ const { findIndex } = require('lodash')
 
 let nowToken = ""
 _addSecret = async (name, value) => {
-    console.log(` add ${name} to ${value}`)
+    console.log(` add ${name} as ${value}`)
     let data = await nowClient(nowToken).createSecret(name, value)
 }
 _resetSecret = async (name, value) => {
     console.log(` delete ${name} to ${value}`)
     let data = await nowClient(nowToken).deleteSecret(name, value)
-    console.log(` add ${name} to ${value}`)
+    console.log(` add ${name} as ${value}`)
     data = await nowClient(nowToken).createSecret(name, value)
 }
 
@@ -63,6 +63,7 @@ exports.deploy =
                 nowClient(nowToken).getSecrets()
                     .then(secrets => {
                         let script = `${command} `
+                        let promises = []
                         const source = readline.createInterface({
                             input: fs.createReadStream(input)
                         })
@@ -74,14 +75,18 @@ exports.deploy =
                                 let envVar = line.split("=")[0].toLowerCase()
                                 let indexFound = findIndex(secrets, ['name', envVar])
                                 indexFound == -1 ?
-                                    _addSecret(envVar, line.split("=")[1]) :
-                                    _resetSecret(envVar, line.split("=")[1])
+                                    promises.push(_addSecret(envVar, line.split("=")[1])) :
+                                    promises.push(_resetSecret(envVar, line.split("=")[1]))
                                 script += `-e ${envVar}=@${envVar} `
                             }
                         })
                         source.on("close", () => {
                             readline.clearLine(source, 0)
-                            resolve(script)
+                            Promise.all(promises)
+                            .then( values => {
+                                console.log(script)
+                                resolve(script)
+                            })
                         })
                     })
                     .catch(error => {
