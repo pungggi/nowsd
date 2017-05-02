@@ -43,8 +43,6 @@ exports.dev =
         })
     }
 
-
-
 exports.prod =
     (
         token,
