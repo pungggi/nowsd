@@ -32,7 +32,7 @@ exports.dev =
                     if (os.platform() == 'win32') {
                         script += `set `
                     }
-                    script += `${line} & `
+                    script += `${line}&`
                 }
             })
             src.on("close", () => {
@@ -82,10 +82,10 @@ exports.prod =
                         source.on("close", () => {
                             readline.clearLine(source, 0)
                             Promise.all(promises)
-                            .then( values => {
-                                console.log(script)
-                                resolve(script)
-                            })
+                                .then(values => {
+                                    console.log(script)
+                                    resolve(script)
+                                })
                         })
                     })
                     .catch(error => {
