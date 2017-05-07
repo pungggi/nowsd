@@ -11,8 +11,9 @@ _addSecret = async (name, value) => {
     let data = await nowClient(nowToken).createSecret(name, value)
 }
 _resetSecret = async (name, value) => {
+    console.log(`delete ${name}`)
     let data = await nowClient(nowToken).deleteSecret(name, value)
-    console.log(` add ${name} as ${value}`)
+    console.log(` reset ${name} as ${value}`)
     data = await nowClient(nowToken).createSecret(name, value)
 }
 
@@ -76,7 +77,7 @@ exports.prod =
                                 indexFound == -1 ?
                                     promises.push(_addSecret(envVar, line.split("=")[1])) :
                                     promises.push(_resetSecret(envVar, line.split("=")[1]))
-                                script += `-e ${envVar}=@${envVar} `
+                                script += `-e ${envVar.toUpperCase()}=@${envVar} `
                             }
                         })
                         source.on("close", () => {
