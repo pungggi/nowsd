@@ -55,43 +55,57 @@ exports.prod =
                 resolve,
                 reject
             ) => {
-                if (!token) {
-                    reject('Token missing. See https://zeit.co/account/tokens.')
-                    return
-                }
-                nowToken = token
-                nowClient(nowToken).getSecrets()
-                    .then(secrets => {
-                        let script = `${command} `
-                        let promises = []
-                        const source = readline.createInterface({
-                            input: fs.createReadStream(input)
+                const src = readline.createInterface({
+                    input: fs.createReadStream(input)
+                })
+
+                src.on("line", line => {
+                    if (line.includes("NOW_KEY=")) {
+                        token = line.split("=")[1]
+                    }
+                })
+
+                src.on("close", () => {
+                    if (!token) {
+                        reject('Token missing. See https://zeit.co/account/tokens.')
+                        return
+                    }
+                    nowToken = token
+                    readline.clearLine(src, 0)
+
+                    nowClient(token).getSecrets()
+                        .then(secrets => {
+                            let script = `${command} `
+                            let promises = []
+                            const source = readline.createInterface({
+                                input: fs.createReadStream(input)
+                            })
+                            // for (let secret of secrets) {
+                            //     console.log(secret.name)
+                            // }
+                            source.on("line", line => {
+                                if (line.includes("=")) {
+                                    let envVar = line.split("=")[0].toLowerCase()
+                                    let indexFound = findIndex(secrets, ['name', envVar])
+                                    indexFound == -1 ?
+                                        promises.push(_addSecret(envVar, line.split("=")[1])) :
+                                        promises.push(_resetSecret(envVar, line.split("=")[1]))
+                                    script += `-e ${envVar.toUpperCase()}=@${envVar} `
+                                }
+                            })
+                            source.on("close", () => {
+                                readline.clearLine(source, 0)
+                                Promise.all(promises)
+                                    .then(values => {
+                                        console.log(script)
+                                        resolve(script)
+                                    })
+                            })
                         })
-                        // for (let secret of secrets) {
-                        //     console.log(secret.name)
-                        // }
-                        source.on("line", line => {
-                            if (line.includes("=")) {
-                                let envVar = line.split("=")[0].toLowerCase()
-                                let indexFound = findIndex(secrets, ['name', envVar])
-                                indexFound == -1 ?
-                                    promises.push(_addSecret(envVar, line.split("=")[1])) :
-                                    promises.push(_resetSecret(envVar, line.split("=")[1]))
-                                script += `-e ${envVar.toUpperCase()}=@${envVar} `
-                            }
+                        .catch(error => {
+                            console.error(error)
                         })
-                        source.on("close", () => {
-                            readline.clearLine(source, 0)
-                            Promise.all(promises)
-                                .then(values => {
-                                    console.log(script)
-                                    resolve(script)
-                                })
-                        })
-                    })
-                    .catch(error => {
-                        console.error(error)
-                    })
+                })
             })
     }
 // exports.createdeploy = async () => {
